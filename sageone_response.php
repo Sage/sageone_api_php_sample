@@ -12,9 +12,15 @@ if($_GET) {
   $token = $_GET['access_token'];
   $endpoint = $_GET['endpoint'];
   $url = "https://api.sageone.com/" . $endpoint;
+
+  /* body params are empty for a GET request */
   $params = array();
+
+  /* generate the request signature */
   $signature_object = new SageoneSigner("get", $url, $params, $nonce, $signing_secret, $token);
   $signature = $signature_object->signature();
+
+  /* Create the request header */
   $header = "Authorization: Bearer " . $token . "\r\n" .
             "X-Signature: " . $signature . "\r\n" .
             "X-Nonce: " . $nonce . "\r\n" .
@@ -30,8 +36,14 @@ if($_GET) {
   $endpoint = $_POST['post_endpoint'];
   $url = "https://api.sageone.com/" . $endpoint;
   $post_data = $_POST['post_data'];
+
+  /* get the body params as an array of key => value pairs */
   $params = json_decode($post_data, true);
+
+  /* generate the request signature */
   $signature_object = new SageoneSigner("post", $url, $params, $nonce, $signing_secret, $token);
+
+  /* Create the request header */
   $header = "Authorization: Bearer " . $token . "\r\n" .
             "X-Signature: " . $signature . "\r\n" .
             "X-Nonce: " . $nonce . "\r\n" .
@@ -42,6 +54,7 @@ if($_GET) {
   $response = $sageone_client->postData($url, $params, $header);
 }
 
+/* prettify JSON response for readability */
 $json = json_decode($response);
 $pretty_json = json_encode($json, JSON_PRETTY_PRINT);
 ?>
