@@ -8,6 +8,15 @@ class SageoneSigner {
 	private $secret;
 	private $token;
 
+	/**
+	* @param string $request_method The request method
+	* @param string $url The url of the request
+	* @param array $request_body_params An array of comma-separated key => value pairs representing the request body
+	* @param string $nonce The nonce
+	* @param string $secret Your application's signing_secret
+	* @param string $token Your access_token obtained during authentication
+	* @example new SageoneSigner("get", $request_url, array(), $nonce, $signing_secret, $access_token)
+	*/
 	public function __construct($request_method, $url, $request_body_params, $nonce, $secret, $token) {
 		$this->request_method = $request_method;
 		$this->url = $url;
