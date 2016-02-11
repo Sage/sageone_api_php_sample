@@ -42,7 +42,8 @@ if($_GET) {
 
   /* generate the request signature */
   $signature_object = new SageoneSigner("post", $url, $params, $nonce, $signing_secret, $token);
-
+  $signature = $signature_object->signature();
+  
   /* Create the request header */
   $header = "Authorization: Bearer " . $token . "\r\n" .
             "X-Signature: " . $signature . "\r\n" .
