@@ -2,23 +2,22 @@
 
 class SageoneClient {
   private $client_id;
-	private $client_secret;
-	private $callback_url;
-	private $auth_endpoint;
-	private $token_endpoint;
-	private $scope;
+  private $client_secret;
+  private $callback_url;
+  private $auth_endpoint;
+  private $token_endpoint;
+  private $scope;
 
-	public function __construct($client_id, $client_secret, $callback_url, $auth_endpoint, $token_endpoint, $scope) {
-		$this->client_id = $client_id;
-		$this->client_secret = $client_secret;
-		$this->callback_url = $callback_url;
-		$this->auth_endpoint = $auth_endpoint;
-		$this->token_endpoint = $token_endpoint;
-		$this->scope = $scope;
-	}
+  public function __construct($client_id, $client_secret, $callback_url, $auth_endpoint, $token_endpoint, $scope) {
+    $this->client_id = $client_id;
+    $this->client_secret = $client_secret;
+    $this->callback_url = $callback_url;
+    $this->auth_endpoint = $auth_endpoint;
+    $this->token_endpoint = $token_endpoint;
+    $this->scope = $scope;
+  }
 
-  public function authRedirect()
-  {
+  public function authRedirect() {
     return  $this->auth_endpoint . "?response_type=code&client_id=" . $this->client_id . "&redirect_uri=" . $this->callback_url . "&scope=" . $this->scope;
   }
 
