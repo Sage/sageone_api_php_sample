@@ -4,6 +4,7 @@ Sample PHP project that integrates with Sage One Accounting via the Sage One API
 
 * Authentication and API calls are handled in  [sageone_client.php](sageone_client.php)
 * Request signing is handled in [sageone_signer.php](sageone_signer.php).
+* Callback is handled in [callback.php](callback.php), point the callback_url here.
 
 ## Run the app locally
 
