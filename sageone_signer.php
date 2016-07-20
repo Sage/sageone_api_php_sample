@@ -106,9 +106,16 @@ class SageoneSigner {
 		}
 	}
 
+	/* base64 encode the request body */
+	private function encodedBody() {
+		$body = array();
+		$body["body"] = base64_encode(http_build_query($this->request_body_params));
+		return $body;
+	}
+
 	/* Encode keys and values then return the sorted array of params */
 	private function sortParams() {
-		$merged = array_merge($this->queryParams(),$this->request_body_params);
+		$merged = array_merge($this->queryParams(),$this->encodedBody());
 		$sorted = array();
 
 		foreach ($merged as $key => $value) {
