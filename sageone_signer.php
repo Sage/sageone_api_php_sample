@@ -99,7 +99,7 @@ class SageoneSigner {
 	/* get the query params */
 	private function queryParams() {
 		if (array_key_exists('query', $this->parsedUrl())) {
-			parse_str($this->url['query'], $output);
+			parse_str($this->parsedUrl()['query'], $output);
 			return $output;
 		} else {
 			return array();
