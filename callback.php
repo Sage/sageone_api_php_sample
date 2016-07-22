@@ -9,7 +9,7 @@ $sageone_client = new SageoneClient($client_id, $client_secret, $callback_url, $
 $response = $sageone_client->getAccessToken($_GET['code']);
 
 /* redirect with the response */
-header("Location: http://localhost:8000/sageone_data.php?token_response=" . $response);
+header("Location: http://localhost:8000/sageone_data.php?token_response=" . rawurlencode($response));
 die();
 
 ?>

@@ -15,7 +15,7 @@ if($_GET) {
     case "get_endpoint":
       $token = $_GET['get_access_token'];
       $endpoint = $_GET['get_endpoint'];
-      $url = "https://api.sageone.com/" . $endpoint;
+      $url = $base_endpoint . $endpoint;
 
       /* body params are empty for a GET request */
       $params = array();
@@ -33,7 +33,7 @@ if($_GET) {
     case "delete_endpoint":
       $token = $_GET['delete_access_token'];
       $endpoint = $_GET['delete_endpoint'];
-      $url = "https://api.sageone.com/" . $endpoint;
+      $url = $base_endpoint . $endpoint;
 
       /* body params are empty for a DELETE request */
       $params = array();
@@ -51,7 +51,7 @@ if($_GET) {
     case "put_endpoint":
       $token = $_GET['put_access_token'];
       $endpoint = $_GET['put_endpoint'];
-      $url = "https://api.sageone.com/" . $endpoint;
+      $url = $base_endpoint . $endpoint;
       $put_data = utf8_encode($_GET['put_data']);
 
       /* get the body params as an array of key => value pairs */
@@ -70,7 +70,7 @@ if($_GET) {
 } else {
   $token = $_POST['post_access_token'];
   $endpoint = $_POST['post_endpoint'];
-  $url = "https://api.sageone.com/" . $endpoint;
+  $url = $base_endpoint . $endpoint;
   $post_data = utf8_encode($_POST['post_data']);
 
   /* get the body params as an array of key => value pairs */
