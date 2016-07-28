@@ -1,41 +1,77 @@
 <!DOCTYPE html>
 <?php
-
 include 'sageone_constants.php';
 include 'sageone_signer.php';
 include 'sageone_client.php';
 
 $sageone_client = new SageoneClient($client_id, $client_secret, $callback_url, $auth_endpoint, $token_endpoint, $scope);
 $nonce = bin2hex(openssl_random_pseudo_bytes(32));
+$header = array("Accept: *.*",
+                "Content_Type: application/x-www-form-urlencoded",
+                "User-Agent: Sage One Sample Application");
 
 if($_GET) {
-  $token = $_GET['access_token'];
-  $endpoint = $_GET['endpoint'];
-  $url = "https://api.sageone.com/" . $endpoint;
+  switch(array_keys($_GET)[0]) {
+    case "get_endpoint":
+      $token = $_GET['get_access_token'];
+      $endpoint = $_GET['get_endpoint'];
+      $url = $base_endpoint . $endpoint;
 
-  /* body params are empty for a GET request */
-  $params = array();
+      /* body params are empty for a GET request */
+      $params = array();
 
-  /* generate the request signature */
-  $signature_object = new SageoneSigner("get", $url, $params, $nonce, $signing_secret, $token);
-  $signature = $signature_object->signature();
+      /* generate the request signature */
+      $signature_object = new SageoneSigner("get", $url, $params, $nonce, $signing_secret, $token);
+      $signature = $signature_object->signature();
 
-  /* Create the request header */
-  $header = "Authorization: Bearer " . $token . "\r\n" .
-            "X-Signature: " . $signature . "\r\n" .
-            "X-Nonce: " . $nonce . "\r\n" .
-            "Accept: *.*\r\n" .
-            "Content_Type: application/x-www-form-urlencoded\r\n" .
-            "User-Agent: Sage One Sample Application\r\n";
+      /* add the token, signature and nonce to the request header */
+      array_push($header, "Authorization: Bearer " . $token, "X-Signature: " . $signature, "X-Nonce: " . $nonce);
 
-  $response = $sageone_client->getData($url, $header);
+      $response = $sageone_client->getData($url, $header);
+      break;
 
+    case "delete_endpoint":
+      $token = $_GET['delete_access_token'];
+      $endpoint = $_GET['delete_endpoint'];
+      $url = $base_endpoint . $endpoint;
+
+      /* body params are empty for a DELETE request */
+      $params = array();
+
+      /* generate the request signature */
+      $signature_object = new SageoneSigner("delete", $url, $params, $nonce, $signing_secret, $token);
+      $signature = $signature_object->signature();
+
+      /* add the token, signature and nonce to the request header */
+      array_push($header, "Authorization: Bearer " . $token, "X-Signature: " . $signature, "X-Nonce: " . $nonce);
+
+      $response = $sageone_client->deleteData($url, $header);
+      break;
+
+    case "put_endpoint":
+      $token = $_GET['put_access_token'];
+      $endpoint = $_GET['put_endpoint'];
+      $url = $base_endpoint . $endpoint;
+      $put_data = utf8_encode($_GET['put_data']);
+
+      /* get the body params as an array of key => value pairs */
+      $params = json_decode($put_data, true);
+
+      /* generate the request signature */
+      $signature_object = new SageoneSigner("put", $url, $params, $nonce, $signing_secret, $token);
+      $signature = $signature_object->signature();
+
+      /* add the token, signature and nonce to the request header */
+      array_push($header, "Authorization: Bearer " . $token, "X-Signature: " . $signature, "X-Nonce: " . $nonce);
+
+      $response = $sageone_client->putData($url, $params, $header);
+      break;
+  }
 } else {
-
   $token = $_POST['post_access_token'];
   $endpoint = $_POST['post_endpoint'];
-  $url = "https://api.sageone.com/" . $endpoint;
-  $post_data = $_POST['post_data'];
+  $url = $base_endpoint . $endpoint;
+  $post_data = utf8_encode($_POST['post_data']);
 
   /* get the body params as an array of key => value pairs */
   $params = json_decode($post_data, true);
@@ -43,14 +79,9 @@ if($_GET) {
   /* generate the request signature */
   $signature_object = new SageoneSigner("post", $url, $params, $nonce, $signing_secret, $token);
   $signature = $signature_object->signature();
-  
-  /* Create the request header */
-  $header = "Authorization: Bearer " . $token . "\r\n" .
-            "X-Signature: " . $signature . "\r\n" .
-            "X-Nonce: " . $nonce . "\r\n" .
-            "Accept: *.*\r\n" .
-            "Content_Type: application/x-www-form-urlencoded\r\n" .
-            "User-Agent: My App Name\r\n";
+
+  /* add the token, signature and nonce to the request header */
+  array_push($header, "Authorization: Bearer " . $token, "X-Signature: " . $signature, "X-Nonce: " . $nonce);
 
   $response = $sageone_client->postData($url, $params, $header);
 }
@@ -77,7 +108,6 @@ $pretty_json = json_encode($json, JSON_PRETTY_PRINT);
       </div>
     </header>
     <div class="container">
-      <h2>Successful request!</h2>
       <pre><?php echo $pretty_json; ?></pre>
     </div>
   </body>
