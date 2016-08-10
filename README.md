@@ -1,5 +1,8 @@
 # Sage One API Sample application (PHP)
 
+### FOR changes required for v3 please refer to the [v3 branch](https://github.com/Sage/sageone_api_java_sample/tree/v3)
+##### NOTE: v3 is currently under development. It is only available in Canada [Beta]
+
 Sample PHP project that integrates with Sage One Accounting via the Sage One API.
 
 * Authentication and API calls are handled in  [sageone_client.php](sageone_client.php)
