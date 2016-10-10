@@ -7,6 +7,7 @@ class SageoneSigner {
 	private $nonce;
 	private $secret;
 	private $token;
+	private $sageone_guid;
 
 	/**
 	* @param string $request_method The request method
@@ -15,15 +16,17 @@ class SageoneSigner {
 	* @param string $nonce The nonce
 	* @param string $secret Your application's signing_secret
 	* @param string $token Your access_token obtained during authentication
+	* @param string $sageone_guid Your resource_owner_id obtained during authentication
 	* @example new SageoneSigner("get", $request_url, array(), $nonce, $signing_secret, $access_token)
 	*/
-	public function __construct($request_method, $url, $request_body_params, $nonce, $secret, $token) {
+	public function __construct($request_method, $url, $request_body_params, $nonce, $secret, $token, $sageone_guid) {
 		$this->request_method = $request_method;
 		$this->url = $url;
 		$this->request_body_params = $request_body_params;
 		$this->nonce = $nonce;
 		$this->secret = $secret;
 		$this->token = $token;
+		$this->sageone_guid = $sageone_guid;
 	}
 
 	/* generate the HMAC-SHA1 signature */
@@ -83,6 +86,8 @@ class SageoneSigner {
 		$str .= rawurlencode($this->parameterString());
 		$str .= "&";
 		$str .= rawurlencode($this->nonce);
+		$str .= "&";
+		$str .= rawurlencode($this->sageone_guid);
 
 		return $str;
 	}

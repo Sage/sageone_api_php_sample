@@ -11,7 +11,7 @@ Clone the repo:
 
 `git clone git@github.com:Sage/sageone_api_php_sample.git`
 
-Update the [sageone_constants.php](sageone_constants.php) file with your application's `client_id`, `client_secret`, `signing_secret` and `callback_url`.
+Update the [sageone_constants.php](sageone_constants.php) file with your application's `client_id`, `client_secret`, `signing_secret`, `apim_subscription_key` and `callback_url`.
 
 Switch to the project directory and start a local PHP server:
 

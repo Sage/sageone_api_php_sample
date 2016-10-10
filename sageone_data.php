@@ -2,6 +2,8 @@
 <?php
 $response = $_GET['token_response'];
 $access_token = json_decode($response, true)['access_token'];
+$resource_owner_id = json_decode($response, true)['resource_owner_id'];
+$country = $_GET['country'];
 /* prettify JSON response for readability */
 $json = json_decode($response);
 $pretty_json = json_encode($json, JSON_PRETTY_PRINT);
@@ -41,8 +43,10 @@ $pretty_json = json_encode($json, JSON_PRETTY_PRINT);
               <form action="sageone_response.php" method="get" class="endpoint_form">
                 <label for="get_endpoint">Endpoint</label>
                 <input id="get_endpoint" name="get_endpoint" type="text" value="" class="form-control" required="true">
-                <p>Example: accounts/v1/contacts</p>
+                <p>Example: accounts/v3/contacts</p>
                 <input id="get_access_token" name="get_access_token" type="hidden" value="<?php echo $access_token ?>">
+                <input id="get_resource_owner_id" name="get_resource_owner_id" type="hidden" value="<?php echo $resource_owner_id ?>">
+                <input id="country" name="country" type="hidden" value="<?php echo $country ?>">
                 <input type='submit' value='GET' class='btn btn-primary'>
               </form>
           </div>
@@ -51,11 +55,13 @@ $pretty_json = json_encode($json, JSON_PRETTY_PRINT);
             <form action="sageone_response.php" method="post" class="endpoint_form">
               <label for="post_endpoint">Endpoint</label>
               <input id="post_endpoint" name="post_endpoint" type="text" value="" class="form-control" required="true">
-              <p>Example: accounts/v1/contacts</p>
+              <p>Example: accounts/v3/contacts</p>
               <label for="post_data">Post data</label>
               <textarea id="post_data" class="form-control" name="post_data"></textarea>
-              <p>Example: {"contact[contact_type_id]": 1, "contact[name]": "Joe Bloggs"}</p>
+              <p>Example: {"contact[contact_type_ids][]": "CUSTOMER", "contact[name]": "Joe Bloggs"}</p>
               <input id="post_access_token" name="post_access_token" type="hidden" value="<?php echo $access_token ?>">
+              <input id="post_resource_owner_id" name="post_resource_owner_id" type="hidden" value="<?php echo $resource_owner_id ?>">
+              <input id="country" name="country" type="hidden" value="<?php echo $country ?>">
               <input type='submit' value='POST' class='btn btn-primary'>
             </form>
           </div>
@@ -64,11 +70,13 @@ $pretty_json = json_encode($json, JSON_PRETTY_PRINT);
             <form action="sageone_response.php" method="put" class="endpoint_form">
               <label for="put_endpoint">Endpoint</label>
               <input id="put_endpoint" name="put_endpoint" type="text" value="" class="form-control" required="true">
-              <p>Example: accounts/v1/contacts/:id</p>
+              <p>Example: accounts/v3/contacts/:id</p>
               <label for="put_data">Put data</label>
               <textarea id="put_data" class="form-control" name="put_data"></textarea>
-              <p>Example: {"contact[contact_type_id]": 1, "contact[name]": "Joe Bloggs"}</p>
+              <p>Example: {"contact[name]": "My updated name"}</p>
               <input id="put_access_token" name="put_access_token" type="hidden" value="<?php echo $access_token ?>">
+              <input id="put_resource_owner_id" name="put_resource_owner_id" type="hidden" value="<?php echo $resource_owner_id ?>">
+              <input id="country" name="country" type="hidden" value="<?php echo $country ?>">
               <input type='submit' value='PUT' class='btn btn-primary'>
             </form>
           </div>
@@ -77,8 +85,10 @@ $pretty_json = json_encode($json, JSON_PRETTY_PRINT);
             <form action="sageone_response.php" method="delete" class="endpoint_form">
               <label for="delete_endpoint">Endpoint</label>
               <input id="delete_endpoint" name="delete_endpoint" type="text" value="" class="form-control" required="true">
-              <p>Example: accounts/v1/contacts/:id</p>
+              <p>Example: accounts/v3/contacts/:id</p>
               <input id="delete_access_token" name="delete_access_token" type="hidden" value="<?php echo $access_token ?>">
+              <input id="delete_resource_owner_id" name="delete_resource_owner_id" type="hidden" value="<?php echo $resource_owner_id ?>">
+              <input id="country" name="country" type="hidden" value="<?php echo $country ?>">
               <input type='submit' value='DELETE' class='btn btn-primary'>
             </form>
           </div>
