@@ -12,7 +12,7 @@ class SageoneSigner {
 	/**
 	* @param string $request_method The request method
 	* @param string $url The url of the request
-	* @param array $request_body_params An array of comma-separated key => value pairs representing the request body
+	* @param string $request_body_params A JSON string representing the post data
 	* @param string $nonce The nonce
 	* @param string $secret Your application's signing_secret
 	* @param string $token Your access_token obtained during authentication
@@ -114,7 +114,8 @@ class SageoneSigner {
 	/* base64 encode the request body */
 	private function encodedBody() {
 		$body = array();
-		$body["body"] = base64_encode(http_build_query($this->request_body_params));
+		$encoded = base64_encode($this->request_body_params);
+		$body["body"] = $encoded;
 		return $body;
 	}
 

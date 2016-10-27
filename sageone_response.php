@@ -28,7 +28,7 @@ switch($country) {
 $sageone_client = new SageoneClient($client_id, $client_secret, $callback_url, $auth_endpoint, $token_endpoint, $scope);
 $nonce = bin2hex(openssl_random_pseudo_bytes(32));
 $header = array("Accept: *.*",
-                "Content_Type: application/x-www-form-urlencoded",
+                "Content-Type: application/json",
                 "User-Agent: Sage One Sample Application",
                 "ocp-apim-subscription-key: " . $apim_subscription_key);
 
@@ -41,7 +41,7 @@ if($_GET) {
       $url = $base_endpoint . $endpoint;
 
       /* body params are empty for a GET request */
-      $params = array();
+      $params = "";
 
       /* generate the request signature */
       $signature_object = new SageoneSigner("get", $url, $params, $nonce, $signing_secret, $token, $sageone_guid);
@@ -79,17 +79,18 @@ if($_GET) {
       $url = $base_endpoint . $endpoint;
       $put_data = utf8_encode($_GET['put_data']);
 
-      /* get the body params as an array of key => value pairs */
-      $params = json_decode($put_data, true);
+      /* get the body params as JSON */
+      $put_data_json_array = json_decode($put_data, true);
+      $put_data_json_string = json_encode($put_data_json_array);
 
       /* generate the request signature */
-      $signature_object = new SageoneSigner("put", $url, $params, $nonce, $signing_secret, $token, $sageone_guid);
+      $signature_object = new SageoneSigner("put", $url, $put_data_json_string, $nonce, $signing_secret, $token, $sageone_guid);
       $signature = $signature_object->signature();
 
       /* add the token, signature and nonce to the request header */
       array_push($header, "Authorization: Bearer " . $token, "X-Signature: " . $signature, "X-Nonce: " . $nonce, "X-Site: " . $sageone_guid);
 
-      $response = $sageone_client->putData($url, $params, $header);
+      $response = $sageone_client->putData($url, $put_data_json_string, $header);
       break;
   }
 } else {
@@ -99,17 +100,19 @@ if($_GET) {
   $url = $base_endpoint . $endpoint;
   $post_data = utf8_encode($_POST['post_data']);
 
-  /* get the body params as an array of key => value pairs */
-  $params = json_decode($post_data, true);
+
+  /* get the body params as JSON */
+  $post_data_json_array = json_decode($post_data, true);
+  $post_data_json_string = json_encode($post_data_json_array);
 
   /* generate the request signature */
-  $signature_object = new SageoneSigner("post", $url, $params, $nonce, $signing_secret, $token, $sageone_guid);
+  $signature_object = new SageoneSigner("post", $url, $post_data_json_string, $nonce, $signing_secret, $token, $sageone_guid);
   $signature = $signature_object->signature();
 
   /* add the token, signature and nonce to the request header */
   array_push($header, "Authorization: Bearer " . $token, "X-Signature: " . $signature, "X-Nonce: " . $nonce, "X-Site: " . $sageone_guid);
 
-  $response = $sageone_client->postData($url, $params, $header);
+  $response = $sageone_client->postData($url, $post_data_json_string, $header);
 }
 
 /* prettify JSON response for readability */

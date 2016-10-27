@@ -76,7 +76,7 @@ class SageoneClient {
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($curl, CURLOPT_HEADER, false);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post_data));
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
     curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
 
     $response = curl_exec($curl);
@@ -91,7 +91,7 @@ class SageoneClient {
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
     curl_setopt($curl, CURLOPT_HEADER, false);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($put_data));
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $put_data);
     curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
 
     $response = curl_exec($curl);
