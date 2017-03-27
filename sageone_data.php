@@ -58,7 +58,7 @@ $pretty_json = json_encode($json, JSON_PRETTY_PRINT);
               <p>Example: accounts/v3/contacts</p>
               <label for="post_data">Post data</label>
               <textarea id="post_data" class="form-control" name="post_data"></textarea>
-              <p>Example: {"contact[contact_type_ids][]": "CUSTOMER", "contact[name]": "Joe Bloggs"}</p>
+              <p>Example: {"contact": { "contact_type_ids": ["CUSTOMER"], "name": "Joe Bloggs"}}</p>
               <input id="post_access_token" name="post_access_token" type="hidden" value="<?php echo $access_token ?>">
               <input id="post_resource_owner_id" name="post_resource_owner_id" type="hidden" value="<?php echo $resource_owner_id ?>">
               <input id="country" name="country" type="hidden" value="<?php echo $country ?>">
@@ -73,7 +73,7 @@ $pretty_json = json_encode($json, JSON_PRETTY_PRINT);
               <p>Example: accounts/v3/contacts/:id</p>
               <label for="put_data">Put data</label>
               <textarea id="put_data" class="form-control" name="put_data"></textarea>
-              <p>Example: {"contact[name]": "My updated name"}</p>
+              <p>Example: {"contact": { "name": "My New Name"}}</p>
               <input id="put_access_token" name="put_access_token" type="hidden" value="<?php echo $access_token ?>">
               <input id="put_resource_owner_id" name="put_resource_owner_id" type="hidden" value="<?php echo $resource_owner_id ?>">
               <input id="country" name="country" type="hidden" value="<?php echo $country ?>">
