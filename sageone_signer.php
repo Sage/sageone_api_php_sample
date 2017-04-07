@@ -114,7 +114,7 @@ class SageoneSigner {
 	/* base64 encode the request body */
 	private function encodedBody() {
 		$body = array();
-		$encode=null;
+		$encoded=null;
 		if(!is_array($this->request_body_params)){
 			
 			$encoded = base64_encode($this->request_body_params);
