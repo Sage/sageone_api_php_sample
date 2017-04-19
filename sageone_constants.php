@@ -3,7 +3,7 @@
   $client_secret = 'YOUR_CLIENT_SECRET';
   $signing_secret = 'YOUR_SIGNING_SECRET';
   $apim_subscription_key = 'YOUR APIM SUBSCRIPTION_KEY';
-  $callback_url = 'YOUR_CALLBACK_URL';
+  $callback_url = 'http://localhost:8080/callback.php';
   $scope = 'full_access';
   $auth_endpoint = 'http://www.sageone.com/oauth2/auth';
   $us_token_endpoint = 'http://mysageone.na.sageone.com/oauth2/token';
