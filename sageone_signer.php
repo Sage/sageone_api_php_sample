@@ -42,13 +42,14 @@ class SageoneSigner {
 	/* Return the base URL */
 	private function baseUrl() {
 		$base_array = array();
-		$base_array[] = $this->parsedUrl()['scheme'];
+		$baseUrlArray=$this->parsedUrl();
+		$base_array[] = $baseUrlArray['scheme'];
 		$base_array[] = "://";
-		$base_array[] = $this->parsedUrl()['host'];
-		if (array_key_exists('port', $this->parsedUrl())) {
-			$base_array[] = ":{$this->parsedUrl()['port']}";
+		$base_array[] = $baseUrlArray['host'];
+		if (array_key_exists('port', $baseUrlArray)) {
+			$base_array[] = ":{$baseUrlArray['port']}";
 		}
-		$base_array[] = $this->parsedUrl()['path'];
+		$base_array[] = $baseUrlArray['path'];
 
 		return join("", $base_array);
 	}
@@ -103,8 +104,9 @@ class SageoneSigner {
 
 	/* get the query params */
 	private function queryParams() {
-		if (array_key_exists('query', $this->parsedUrl())) {
-			parse_str($this->parsedUrl()['query'], $output);
+		$parsedUrl=$this->parsedUrl();
+		if (array_key_exists('query', $parsedUrl)) {
+			parse_str($parsedUrl['query'], $output);
 			return $output;
 		} else {
 			return array();
