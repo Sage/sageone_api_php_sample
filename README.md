@@ -1,5 +1,7 @@
 # Sage One API Sample application (PHP)
 
+##### Note: Request signing and noncing (the X-Signature and X-Nonce headers) is no longer checked in v3. The related code will soon be removed from this repo.
+
 Sample PHP project that integrates with Sage One Accounting via the Sage One API.
 
 * Authentication and API calls are handled in  [sageone_client.php](sageone_client.php)
