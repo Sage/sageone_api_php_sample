@@ -1,31 +1,22 @@
 <!DOCTYPE html>
 <?php
+
 include 'sageone_constants.php';
 include 'sageone_signer.php';
 include 'sageone_client.php';
 
 $country = $_GET['country'] ?: $_POST['country'];
 
-switch($country) {
-  case "CA":
-    $base_endpoint = $ca_base_endpoint;
-    $token_endpoint = $ca_token_endpoint;
-    break;
-  case "US":
-    $base_endpoint = $us_base_endpoint;
-    $token_endpoint = $us_token_endpoint;
-    break;
-  case "IE": case "GB":
-    $base_endpoint = $uki_base_endpoint;
-    $token_endpoint = $uki_token_endpoint;
-    break;
-  default:
-    $base_endpoint = $uki_base_endpoint;
-    $token_endpoint = $uki_token_endpoint;
-    break;
-};
+if ( isset( $endpoints['base'][$country] ) && isset( $endpoints['token'][$country] ) ) {
+  $base_endpoint = $endpoints['base'][$country] ;
+  $token_endpoint = $endpoints['token'][$country] ;
+}
+else {
+  echo "Country endpoints not defined" ;
+  exit ;
+}
 
-$sageone_client = new SageoneClient($client_id, $client_secret, $callback_url, $auth_endpoint, $token_endpoint, $scope);
+$sageone_client = new SageoneClient($client_id, $client_secret, $callback_url, $endpoints['auth'], $token_endpoint, $scope);
 $nonce = bin2hex(openssl_random_pseudo_bytes(32));
 $header = array("Accept: *.*",
                 "Content-Type: application/json",

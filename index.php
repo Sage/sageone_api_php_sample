@@ -3,7 +3,7 @@
 include 'sageone_client.php';
 include 'sageone_constants.php';
 
-$sageone_client = new SageoneClient($client_id, $client_secret, $callback_url, $auth_endpoint, $token_endpoint, $scope);
+$sageone_client = new SageoneClient($client_id, $client_secret, $callback_url, $endpoints['auth'], null, $scope);
 
 /* get the redirect url for authorisation */
 $redirect_url = $sageone_client->authRedirect();
