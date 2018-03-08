@@ -1,12 +1,12 @@
-# Sage One API Sample application (PHP)
+# Sage Business Cloud API Sample application (PHP)
 
 ### FOR changes required for v3 please refer to the [v3 branch](https://github.com/Sage/sageone_api_php_sample/tree/v3)
 
 ##### Note: Request signing and noncing (the X-Signature and X-Nonce headers) is no longer checked in v3. The related code will soon be removed from this repo.
 
-Sample PHP project that integrates with Sage One Accounting via the Sage One API.
+Sample PHP project that integrates with Sage Business Cloud Accounting via the Sage API.
 
-* Authentication and API calls are handled in  [sageone_client.php](sageone_client.php)
+* Authentication and API calls are handled in [sageone_client.php](sageone_client.php)
 * Request signing is handled in [sageone_signer.php](sageone_signer.php).
 * Callback is handled in [callback.php](callback.php), point the callback_url here.
 
