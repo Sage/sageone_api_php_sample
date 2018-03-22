@@ -26,3 +26,10 @@ php -S localhost:8000
 ```
 
 You can now access the [home page](http://localhost:8000/), authorize and make an API call.
+
+## License
+
+This sample application is available as open source under the terms of the
+[MIT licence](LICENSE).
+
+Copyright (c) 2018 Sage Group Plc. All rights reserved.
