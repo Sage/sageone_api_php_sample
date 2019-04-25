@@ -1,4 +1,4 @@
-# Sage Accounting API Sample application (PHP)
+# Sage Business Cloud Accounting API Sample application (PHP)
 
 Sample PHP project that integrates with Sage Accounting via the Sage Accounting API.
 
@@ -42,4 +42,11 @@ Start the container:
 
 ## Usage
 
-You can now access the [home page](http://localhost:8080/), authorize and make an API call.
+You can now access the [home page](http://localhost:8000/), authorize and make an API call.
+
+## License
+
+This sample application is available as open source under the terms of the
+[MIT licence](LICENSE).
+
+Copyright (c) 2019 Sage Group Plc. All rights reserved.
