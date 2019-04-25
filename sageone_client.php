@@ -30,7 +30,7 @@ class SageoneClient {
   * authorisation endpoint
   */
   public function authRedirect() {
-    return  $this->auth_endpoint . "?response_type=code&client_id=" . $this->client_id . "&redirect_uri=" . $this->callback_url . "&scope=" . $this->scope;
+    return  $this->auth_endpoint . "&response_type=code&client_id=" . $this->client_id . "&redirect_uri=" . $this->callback_url . "&scope=" . $this->scope;
   }
 
   /* POST request to exchange the authorisation code for an access_token */
@@ -116,7 +116,7 @@ class SageoneClient {
 
   private function getToken($params) {
     $url = $this->token_endpoint;
-    $options = array('http' => array('header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+    $options = array('http' => array('header'  => "Content-type: application/x-www-form-urlencoded",
                                      'method'  => 'POST',
                                      'content' => http_build_query($params)));
     $context  = stream_context_create($options);

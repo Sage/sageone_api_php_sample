@@ -1,16 +1,9 @@
 <?php
   $client_id = 'YOUR_CLIENT_ID';
   $client_secret = 'YOUR_CLIENT_SECRET';
-  $signing_secret = 'YOUR_SIGNING_SECRET';
-  $apim_subscription_key = 'YOUR APIM SUBSCRIPTION_KEY';
   $callback_url = 'http://localhost:8080/callback.php';
   $scope = 'full_access';
-  $auth_endpoint = 'https://www.sageone.com/oauth2/auth';
-  $us_token_endpoint = 'https://mysageone.na.sageone.com/oauth2/token';
-  $ca_token_endpoint = 'https://mysageone.ca.sageone.com/oauth2/token';
-  $uki_token_endpoint = 'https://api.sageone.com/oauth2/token';
-  $us_base_endpoint = 'https://api.columbus.sage.com/us/sageone/';
-  $ca_base_endpoint = 'https://api.columbus.sage.com/ca/sageone/';
-  $uki_base_endpoint = 'https://api.columbus.sage.com/uki/sageone/';
-
+  $auth_endpoint = 'https://www.sageone.com/oauth2/auth/central?filter=apiv3.1';
+  $token_endpoint = 'https://oauth.accounting.sage.com/token';
+  $base_endpoint = 'https://api.accounting.sage.com/v3.1/';
 ?>
