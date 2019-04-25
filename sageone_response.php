@@ -1,36 +1,12 @@
 <!DOCTYPE html>
 <?php
 include 'sageone_constants.php';
-include 'sageone_signer.php';
 include 'sageone_client.php';
 
-$country = $_GET['country'] ?: $_POST['country'];
-
-switch($country) {
-  case "CA":
-    $base_endpoint = $ca_base_endpoint;
-    $token_endpoint = $ca_token_endpoint;
-    break;
-  case "US":
-    $base_endpoint = $us_base_endpoint;
-    $token_endpoint = $us_token_endpoint;
-    break;
-  case "IE": case "GB":
-    $base_endpoint = $uki_base_endpoint;
-    $token_endpoint = $uki_token_endpoint;
-    break;
-  default:
-    $base_endpoint = $uki_base_endpoint;
-    $token_endpoint = $uki_token_endpoint;
-    break;
-};
-
 $sageone_client = new SageoneClient($client_id, $client_secret, $callback_url, $auth_endpoint, $token_endpoint, $scope);
-$nonce = bin2hex(openssl_random_pseudo_bytes(32));
 $header = array("Accept: *.*",
                 "Content-Type: application/json",
-                "User-Agent: Sage One Sample Application",
-                "ocp-apim-subscription-key: " . $apim_subscription_key);
+                "User-Agent: Sage Accounting PHP Sample Application");
 
 if($_GET) {
   switch(array_keys($_GET)[0]) {
@@ -43,12 +19,8 @@ if($_GET) {
       /* body params are empty for a GET request */
       $params = "";
 
-      /* generate the request signature */
-      $signature_object = new SageoneSigner("get", $url, $params, $nonce, $signing_secret, $token, $sageone_guid);
-      $signature = $signature_object->signature();
-
       /* add the token, signature and nonce to the request header */
-      array_push($header, "Authorization: Bearer " . $token, "X-Signature: " . $signature, "X-Nonce: " . $nonce, "X-Site: " . $sageone_guid);
+      array_push($header, "Authorization: Bearer " . $token, "X-Business: " . $sageone_guid);
 
       $response = $sageone_client->getData($url, $header);
       break;
@@ -62,12 +34,8 @@ if($_GET) {
       /* body params are empty for a DELETE request */
       $params = array();
 
-      /* generate the request signature */
-      $signature_object = new SageoneSigner("delete", $url, $params, $nonce, $signing_secret, $token, $sageone_guid);
-      $signature = $signature_object->signature();
-
       /* add the token, signature and nonce to the request header */
-      array_push($header, "Authorization: Bearer " . $token, "X-Signature: " . $signature, "X-Nonce: " . $nonce, "X-Site: " . $sageone_guid);
+      array_push($header, "Authorization: Bearer " . $token, "X-Business: " . $sageone_guid);
 
       $response = $sageone_client->deleteData($url, $header);
       break;
@@ -83,12 +51,8 @@ if($_GET) {
       $put_data_json_array = json_decode($put_data, true);
       $put_data_json_string = json_encode($put_data_json_array);
 
-      /* generate the request signature */
-      $signature_object = new SageoneSigner("put", $url, $put_data_json_string, $nonce, $signing_secret, $token, $sageone_guid);
-      $signature = $signature_object->signature();
-
       /* add the token, signature and nonce to the request header */
-      array_push($header, "Authorization: Bearer " . $token, "X-Signature: " . $signature, "X-Nonce: " . $nonce, "X-Site: " . $sageone_guid);
+      array_push($header, "Authorization: Bearer " . $token, "X-Business: " . $sageone_guid);
 
       $response = $sageone_client->putData($url, $put_data_json_string, $header);
       break;
@@ -105,12 +69,8 @@ if($_GET) {
   $post_data_json_array = json_decode($post_data, true);
   $post_data_json_string = json_encode($post_data_json_array);
 
-  /* generate the request signature */
-  $signature_object = new SageoneSigner("post", $url, $post_data_json_string, $nonce, $signing_secret, $token, $sageone_guid);
-  $signature = $signature_object->signature();
-
   /* add the token, signature and nonce to the request header */
-  array_push($header, "Authorization: Bearer " . $token, "X-Signature: " . $signature, "X-Nonce: " . $nonce, "X-Site: " . $sageone_guid);
+  array_push($header, "Authorization: Bearer " . $token, "X-Business: " . $sageone_guid);
 
   $response = $sageone_client->postData($url, $post_data_json_string, $header);
 }
@@ -121,7 +81,7 @@ $pretty_json = json_encode($json, JSON_PRETTY_PRINT);
 ?>
 <html>
   <head>
-    <title>Sage One Response</title>
+    <title>Sage Accounting Response</title>
     <link type="text/css" rel="stylesheet" href="sample_app.css">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -133,7 +93,7 @@ $pretty_json = json_encode($json, JSON_PRETTY_PRINT);
   <body>
     <header class="navbar navbar-fixed-top navbar-inverse">
       <div class="container">
-        <a id="logo" href="/">Sage One API Sample App</a>
+        <a id="logo" href="/">Sage Accounting API Sample App</a>
       </div>
     </header>
     <div class="container">

@@ -10,7 +10,7 @@ $redirect_url = $sageone_client->authRedirect();
 ?>
 <html>
   <head>
-    <title>Authorize with Sage One</title>
+    <title>Authorize with Sage Accounting</title>
     <link type="text/css" rel="stylesheet" href="sample_app.css">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -22,13 +22,13 @@ $redirect_url = $sageone_client->authRedirect();
   <body>
   <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <a id="logo" href="/SageOneSampleApp">Sage One API Sample App</a>
+    <a id="logo" href="/SageOneSampleApp">Sage Accounting API Sample App</a>
   </div>
 </header>
   <div class="container">
     <div class="center well">
-      <h1>Sage One API Sample Application (PHP)</h1>
-      <h3>This sample application integrates with the Sage One API.</h3>
+      <h1>Sage Accounting API Sample Application (PHP)</h1>
+      <h3>This sample application integrates with the Sage Accounting API.</h3>
       <p>Before you can make any API calls, you need to <a href="<?php echo $redirect_url ?>">Authorize</a><p>
     </div>
     </div>
