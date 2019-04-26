@@ -8,7 +8,7 @@
   $auth_endpoint = 'https://www.sageone.com/oauth2/auth';
   $us_token_endpoint = 'https://mysageone.na.sageone.com/oauth2/token';
   $ca_token_endpoint = 'https://mysageone.ca.sageone.com/oauth2/token';
-  $uki_token_endpoint = 'https://api.sageone.com/oauth2/token';
+  $uki_token_endpoint = 'https://app.sageone.com/oauth2/token';
   $us_base_endpoint = 'https://api.columbus.sage.com/us/sageone/';
   $ca_base_endpoint = 'https://api.columbus.sage.com/ca/sageone/';
   $uki_base_endpoint = 'https://api.columbus.sage.com/uki/sageone/';
