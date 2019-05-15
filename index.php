@@ -3,6 +3,12 @@
 include 'sageone_client.php';
 include 'sageone_constants.php';
 
+$client_config = new ClientConfiguration;
+if (!$client_config->load()) {
+  echo file_get_contents('html/error_loading_client_config.html');
+  die();
+}
+
 $sageone_client = new SageoneClient($client_id, $client_secret, $callback_url, $auth_endpoint, $token_endpoint, $scope);
 
 /* get the redirect url for authorisation */
@@ -22,14 +28,14 @@ $redirect_url = $sageone_client->authRedirect();
   <body>
   <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <a id="logo" href="/SageOneSampleApp">Sage Accounting API Sample App</a>
+    <a id="logo" href="/">Sage Accounting API Sample App</a>
   </div>
 </header>
   <div class="container">
     <div class="center well">
       <h1>Sage Accounting API Sample Application (PHP)</h1>
       <h3>This sample application integrates with the Sage Accounting API.</h3>
-      <p>Before you can make any API calls, you need to <a href="<?php echo $redirect_url ?>">Authorize</a><p>
+      <p>Before you can make any API calls, you need to <a href="<?php echo $redirect_url ?>">Authorize</a></p>
     </div>
     </div>
   </body>

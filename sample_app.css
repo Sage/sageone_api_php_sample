@@ -117,6 +117,14 @@ p {
   @include box_sizing;
 }
 
+.pre {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.left {
+  text-align: left;
+}
+
 /* forms */
 
 input, textarea, select, .uneditable-input {

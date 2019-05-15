@@ -1,0 +1,40 @@
+
+<html>
+  <head>
+    <title>Error Loading client_config.yml</title>
+    <link type="text/css" rel="stylesheet" href="sample_app.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </head>
+  <body>
+  <header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <a id="logo" href="/">Sage Accounting API Sample App</a>
+  </div>
+</header>
+  <div class="container">
+    <div class="left well">
+      <h1>There was a problem loading client_config.yml</h1>
+      <p>Before you can start, you need to prepare a config file, which contains information
+        about your registered client application.</p>
+      <p>Follow these steps to get this sample application running:</p>
+      <ul>
+        <li>Make a copy of the file <span class="pre">client_config.template.yml</span> and
+          name it <span class="pre">client_config.yml</span>.</li>
+        <li>Go to the Sage Developer Self Service at
+          <a href="https://developerselfservice.sageone.com/">https://developerselfservice.sageone.com/</a>
+          and sign up or sign in.</li>
+        <li>Create a new application (app) and copy the values for Client ID and Client Secret
+          into the fields in <span class="pre">client_config.yml</span>.</li>
+        <li>Depending on the way you run the sample app (Docker environment, local Apache,
+          etc.) adjust the hostname/port of the callback URL below. Add the same callback URL
+          to your client application in the Sage Developer Self Service.</li>
+      </ul>
+    </div>
+    </div>
+  </body>
+</html>
