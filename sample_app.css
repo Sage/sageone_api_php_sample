@@ -107,6 +107,23 @@ p {
   }
 }
 
+/* footer */
+
+footer ul {
+  display: inline;
+  padding-left: 5px;
+}
+
+footer ul.flags {
+  display: inline;
+  font-size: 20px;
+}
+
+footer ul li {
+  display: inline;
+  padding-left: 3px;
+}
+
 /* miscellaneous */
 
 .debug_dump {
@@ -121,7 +138,15 @@ p {
   font-family: 'Courier New', Courier, monospace;
 }
 
-.left {
+.guide, .dev-resources {
+  width: 600px;
+  text-align: left;
+}
+
+.error {
+  border: 1px red solid;
+  background-color: antiquewhite;
+  padding: 3px 20px;
   text-align: left;
 }
 

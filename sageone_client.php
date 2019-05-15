@@ -1,5 +1,7 @@
 <?php
 
+include 'client_configuration.php';
+
 class SageoneClient {
   private $client_id;
   private $client_secret;

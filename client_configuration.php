@@ -29,6 +29,13 @@ class ClientConfiguration {
   /**
   * Loads the data from the config file. Returns TRUE on success, otherwise FALSE
   */
+  public function fileExists() {
+    return file_exists("client_config.yml");
+  }
+
+  /**
+  * Loads the data from the config file. Returns TRUE on success, otherwise FALSE
+  */
   public function load() {
     $result = @yaml_parse_file("client_config.yml");
     if (!$result) return FALSE;
