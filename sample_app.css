@@ -138,7 +138,7 @@ footer ul li {
   font-family: 'Courier New', Courier, monospace;
 }
 
-.guide, .dev-resources {
+.guide, .access-token, .dev-resources {
   width: 600px;
   text-align: left;
 }

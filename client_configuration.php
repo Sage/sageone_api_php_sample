@@ -5,6 +5,8 @@ class ClientConfiguration {
   private $clientSecret;
   private $callbackUrl;
 
+  const FILE_NAME = "client_config.yml";
+
   /**
   * Returns the previously loaded client Id
   */
@@ -27,17 +29,17 @@ class ClientConfiguration {
   }
 
   /**
-  * Loads the data from the config file. Returns TRUE on success, otherwise FALSE
+  * Returns TRUE if the config file exists, otherwise FALSE
   */
   public function fileExists() {
-    return file_exists("client_config.yml");
+    return file_exists(self::FILE_NAME);
   }
 
   /**
   * Loads the data from the config file. Returns TRUE on success, otherwise FALSE
   */
   public function load() {
-    $result = @yaml_parse_file("client_config.yml");
+    $result = @yaml_parse_file(self::FILE_NAME);
     if (!$result) return FALSE;
 
     $this->clientId = $result['config']['client_id'];

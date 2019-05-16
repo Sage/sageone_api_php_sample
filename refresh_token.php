@@ -6,9 +6,9 @@ include 'sageone_constants.php';
 $sageone_client = new SageoneClient($auth_endpoint, $token_endpoint, $scope);
 
 /* Exchange the authorisation code for an access_token */
-$response = $sageone_client->getInitialAccessToken($_GET['code']);
+$response = $sageone_client->renewAccessToken();
 
 /* redirect with the response */
-header("Location: http://" . $_SERVER['HTTP_HOST'] . "/sageone_data.php");
+header("Location: http://" . $_SERVER['HTTP_HOST'] . "/");
 
 ?>
