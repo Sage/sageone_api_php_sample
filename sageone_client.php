@@ -8,23 +8,20 @@ class SageoneClient {
   private $clientId;
   private $clientSecret;
   private $callbackUrl;
-  private $auth_endpoint;
-  private $token_endpoint;
   private $scope;
   private $accessToken;
   private $refreshToken;
+  private $accessTokenStore;
 
   const BASE_ENDPOINT = "https://api.accounting.sage.com/v3.1/";
+  const AUTH_ENDPOINT = "https://www.sageone.com/oauth2/auth/central?filter=apiv3.1";
+  const TOKEN_ENDPOINT = "https://oauth.accounting.sage.com/token";
+  const SCOPE = "full_access";
 
   /**
-  * @param string $auth_endpoint The authorisation endpoint (https://www.sageone.com/oauth2/auth)
-  * @param string $token_endpoint The token endpoint (https://api.sageone.com/oauth2/token)
-  * @param string $scope The type of access - readonly or full_access
+  * Constructor
   */
-  public function __construct($auth_endpoint, $token_endpoint, $scope) {
-    $this->auth_endpoint = $auth_endpoint;
-    $this->token_endpoint = $token_endpoint;
-    $this->scope = $scope;
+  public function __construct() {
     $this->loadClientConfiguration();
   }
 
@@ -33,9 +30,9 @@ class SageoneClient {
   * making the auth request
   */
   public function authorizationEndpoint() {
-    return  $this->auth_endpoint . "&response_type=code&client_id=" .
+    return self::AUTH_ENDPOINT . "&response_type=code&client_id=" .
       $this->clientId . "&redirect_uri=" . $this->callbackUrl .
-      "&scope=" . $this->scope . "&state=some_random_string";
+      "&scope=" . self::SCOPE . "&state=some_random_string";
   }
 
   /* POST request to exchange the authorization code for an access_token */
@@ -53,10 +50,9 @@ class SageoneClient {
 
   /* POST request to renew the access_token */
   public function renewAccessToken() {
-    $this->loadAccessToken();
     $params = array("client_id" => $this->clientId,
                     "client_secret" => $this->clientSecret,
-                    "refresh_token" => $this->refreshToken,
+                    "refresh_token" => $this->getRefreshToken(),
                     "grant_type" => "refresh_token");
 
     $response = $this->getToken($params);
@@ -71,6 +67,40 @@ class SageoneClient {
 
     return $this->buildApiResponse($curl, $response);
   }
+
+  /**
+  * Returns the previously loaded access token
+  */
+  public function getAccessToken() {
+    return $this->getAccessTokenStore()->getAccessToken();
+  }
+
+  /**
+  * Returns the previously loaded UNIX timestamp when the access token expires
+  */
+  public function getExpiresAt() {
+    return $this->getAccessTokenStore()->getExpiresAt();
+  }
+
+  /**
+  * Returns the previously loaded refresh token
+  */
+  public function getRefreshToken() {
+    return $this->getAccessTokenStore()->getRefreshToken();
+  }
+
+  public function getAccessTokenStore() {
+    if ($this->accessTokenStore) return $this->accessTokenStore;
+
+    $this->accessTokenStore = new AccessTokenStore();
+    if (!$this->accessTokenStore->load()) {
+      $this->accessTokenStore = NULL;
+    }
+
+    return $this->accessTokenStore;
+  }
+
+  // Private area
 
   private function prepareApiRequest($resource, $method, $postData = NULL) {
     $endpoint = self::BASE_ENDPOINT . $resource;
@@ -106,53 +136,45 @@ class SageoneClient {
   }
 
   private function getToken($params) {
-    $url = $this->token_endpoint;
     $options = array('http' => array('header'  => "Content-type: application/x-www-form-urlencoded",
                                      'method'  => 'POST',
                                      'content' => http_build_query($params)));
     $context  = stream_context_create($options);
-    $result = file_get_contents($url, false, $context);
+    $result = file_get_contents(self::TOKEN_ENDPOINT, false, $context);
     if ($result === FALSE) { /* Handle error */ }
 
     return $result;
   }
 
   private function getRequestHeaders() {
-    $this->loadAccessToken();
-
     return array("Accept: *.*",
                  "Content-Type: application/json",
                  "User-Agent: Sage Accounting API Sample App - PHP",
-                 "Authorization: Bearer " . $this->accessToken);
-}
-
-  private function loadClientConfiguration() {
-    $client_config = new ClientConfiguration;
-    if ($client_config->load()) {
-      $this->clientId = $client_config->getClientId();
-      $this->clientSecret = $client_config->getClientSecret();
-      $this->callbackUrl = $client_config->getCallbackUrl();
-    }
+                 "Authorization: Bearer " . $this->getAccessToken());
   }
 
-  private function loadAccessToken() {
-    $access_token_store = new AccessTokenStore();
-    if ($access_token_store->load()) {
-      $this->accessToken = $access_token_store->getAccessToken();
-      $this->refreshToken = $access_token_store->getRefreshToken();
+  private function loadClientConfiguration() {
+    $clientConfig = new ClientConfiguration;
+    if ($clientConfig->load()) {
+      $this->clientId = $clientConfig->getClientId();
+      $this->clientSecret = $clientConfig->getClientSecret();
+      $this->callbackUrl = $clientConfig->getCallbackUrl();
     }
   }
 
   private function storeAccessToken($response) {
     $json = json_decode($response, true);
 
-    $access_token_store = new AccessTokenStore();
-    $access_token_store->save($json["access_token"],
-                              $json["expires_in"],
-                              $json["refresh_token"],
-                              $json["refresh_token_expires_in"]);
+    if (!$this->accessTokenStore) {
+      $this->accessTokenStore = new AccessTokenStore();
+    }
 
-      return $json;
+    $this->accessTokenStore->save($json["access_token"],
+                                  $json["expires_in"],
+                                  $json["refresh_token"],
+                                  $json["refresh_token_expires_in"]);
+
+    return $json;
   }
 }
 

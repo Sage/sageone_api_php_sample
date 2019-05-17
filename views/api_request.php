@@ -1,9 +1,8 @@
 <?php
 
-$access_token_store = new AccessTokenStore();
-if ($access_token_store->load()) {
+if ($apiClient->getAccessTokenStore()) {
 
-  $expiresIn = $access_token_store->getExpiresAt() - time();
+  $expiresIn = $apiClient->getExpiresAt() - time();
   if ($expiresIn > 0) {
 
 ?>

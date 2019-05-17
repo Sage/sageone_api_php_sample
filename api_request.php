@@ -1,11 +1,11 @@
 <?php
-include 'sageone_constants.php';
+
 include 'sageone_client.php';
 
 session_start();
 unset($_SESSION['api_response']);
 
-$apiClient = new SageoneClient($auth_endpoint, $token_endpoint, $scope);
+$apiClient = new SageoneClient;
 
 $response = $apiClient->execApiRequest($_POST['resource'],
                                        $_POST['http_verb'], $_POST['post_data']);

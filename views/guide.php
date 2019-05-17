@@ -1,8 +1,3 @@
-<?php
-
-$apiClient = new SageoneClient($auth_endpoint, $token_endpoint, $scope);
-
-?>
 <div class="guide">
   <h3>Guide</h3>
   <ol>

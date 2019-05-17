@@ -1,9 +1,8 @@
 <?php
 
 include 'sageone_client.php';
-include 'sageone_constants.php';
 
-$apiClient = new SageoneClient($auth_endpoint, $token_endpoint, $scope);
+$apiClient = new SageoneClient;
 
 /* Exchange the authorisation code for an access_token */
 $response = $apiClient->getInitialAccessToken($_GET['code']);

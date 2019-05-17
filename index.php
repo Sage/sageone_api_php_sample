@@ -3,10 +3,11 @@
 session_start();
 
 include 'sageone_client.php';
-include 'sageone_constants.php';
 
-$client_config = new ClientConfiguration;
-if ($client_config->fileExists() && !$client_config->load()) {
+$apiClient = new SageoneClient;
+
+$clientConfig = new ClientConfiguration;
+if ($clientConfig->fileExists() && !$clientConfig->load()) {
   $error = file_get_contents('views/error_loading_client_config.php');
 }
 
