@@ -7,7 +7,8 @@ unset($_SESSION['api_response']);
 
 $apiClient = new SageoneClient($auth_endpoint, $token_endpoint, $scope);
 
-$response = $apiClient->execGET($_POST['resource']);
+$response = $apiClient->execApiRequest($_POST['resource'],
+                                       $_POST['http_verb'], $_POST['post_data']);
 
 $_SESSION['api_response'] = serialize($response);
 

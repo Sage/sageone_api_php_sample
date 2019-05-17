@@ -12,8 +12,8 @@ if ($access_token_store->load()) {
 
   <form action="api_request.php" method="post" class="endpoint_form">
     <div class="api-request-verb-url">
-      <label for="http-verb">HTTP Verb</label>
-      <select name="http-verb">
+      <label for="http_verb">HTTP Verb</label>
+      <select name="http_verb">
         <option value="get">GET</option>
         <option value="post">POST</option>
         <option value="put">PUT</option>
@@ -24,7 +24,7 @@ if ($access_token_store->load()) {
       <input name="resource" type="text" value="contacts" class="form-control" required="true">
     </div>
     <label for="post_data">Post data</label>
-    <textarea id="post_data" class="form-control" name="post_data"></textarea>
+    <textarea class="form-control" name="post_data"></textarea>
     <p>Example: {"contact": { "contact_type_ids": ["CUSTOMER"], "name": "Joe Bloggs"}}</p>
     <input type='submit' class='btn btn-primary'>
   </form>

@@ -65,69 +65,44 @@ class SageoneClient {
   }
 
   /* GET request */
-  public function execGET($resource) {
-    $endpoint = self::BASE_ENDPOINT . $resource;
-
-    $curl = curl_init($endpoint);
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-    curl_setopt($curl, CURLOPT_HEADER, false);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getRequestHeaders());
-
-    curl_setopt($curl, CURLINFO_HEADER_OUT, TRUE);
-
-    $response = curl_exec($curl);
-    if (!$response) { /* Handle error */ }
+  public function execApiRequest($resource, $httpMethod, $postData = NULL) {
+    $curl = $this->prepareApiRequest($resource, $httpMethod, $postData);
+    $response = $this->sendApiRequest($curl);
 
     return $this->buildApiResponse($curl, $response);
   }
 
+  private function prepareApiRequest($resource, $method, $postData = NULL) {
+    $endpoint = self::BASE_ENDPOINT . $resource;
+    $method = strtoupper($method);
+
+    $curl = curl_init($endpoint);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getRequestHeaders());
+
+    if ($postData && ($method == 'POST' || $method == 'PUT')) {
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
+    }
+
+    curl_setopt($curl, CURLINFO_HEADER_OUT, TRUE);
+
+    return $curl;
+  }
+
+  private function sendApiRequest($curl) {
+    $response = curl_exec($curl);
+
+    if (!$response) {
+      /* Handle errors: DNS lookup failed, connection timeout, read timeout */
+    }
+
+    return $response;
+  }
+
   private function buildApiResponse($curl, $response) {
     return new SageAccountingApiResponse($curl, $response);
-  }
-
-  /* POST request */
-  public function postData($endpoint, $post_data, $header) {
-    $curl = curl_init($endpoint);
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($curl, CURLOPT_HEADER, false);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-
-    $response = curl_exec($curl);
-    if (!$response) { /* Handle error */ }
-
-    return $response;
-  }
-
-  /* PUT request */
-  public function putData($endpoint, $put_data, $header) {
-    $curl = curl_init($endpoint);
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-    curl_setopt($curl, CURLOPT_HEADER, false);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $put_data);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-
-    $response = curl_exec($curl);
-    if (!$response) { /* Handle error */ }
-
-    return $response;
-  }
-
-  /* DELETE request */
-  public function deleteData($endpoint, $header) {
-    $curl = curl_init($endpoint);
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-    curl_setopt($curl, CURLOPT_HEADER, false);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-
-    $response = curl_exec($curl);
-    if (!$response) { /* Handle error */ }
-
-    return $response;
   }
 
   private function getToken($params) {
