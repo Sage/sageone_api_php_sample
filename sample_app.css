@@ -138,9 +138,23 @@ footer ul li {
   font-family: 'Courier New', Courier, monospace;
 }
 
-.guide, .access-token, .dev-resources {
+.guide, .access-token, .dev-resources, .api-request {
   width: 600px;
   text-align: left;
+}
+
+.api-response {
+  text-align: left;
+}
+
+.json {
+  background-color: ghostwhite;
+  border: 1px gray solid;
+  color: black;
+  display: block;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 5px 9px;
+  white-space: pre;
 }
 
 .error {

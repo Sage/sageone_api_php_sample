@@ -2,6 +2,7 @@
 
 include 'client_configuration.php';
 include 'access_token_store.php';
+include 'sage_accounting_api_response.php';
 
 class SageoneClient {
   private $clientId;
@@ -12,6 +13,8 @@ class SageoneClient {
   private $scope;
   private $accessToken;
   private $refreshToken;
+
+  const BASE_ENDPOINT = "https://api.accounting.sage.com/v3.1/";
 
   /**
   * @param string $auth_endpoint The authorisation endpoint (https://www.sageone.com/oauth2/auth)
@@ -62,17 +65,25 @@ class SageoneClient {
   }
 
   /* GET request */
-  public function getData($endpoint, $header) {
+  public function execGET($resource) {
+    $endpoint = self::BASE_ENDPOINT . $resource;
+
     $curl = curl_init($endpoint);
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_setopt($curl, CURLOPT_HEADER, false);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getRequestHeaders());
+
+    curl_setopt($curl, CURLINFO_HEADER_OUT, TRUE);
 
     $response = curl_exec($curl);
     if (!$response) { /* Handle error */ }
 
-    return $response;
+    return $this->buildApiResponse($curl, $response);
+  }
+
+  private function buildApiResponse($curl, $response) {
+    return new SageAccountingApiResponse($curl, $response);
   }
 
   /* POST request */
@@ -130,6 +141,15 @@ class SageoneClient {
 
     return $result;
   }
+
+  private function getRequestHeaders() {
+    $this->loadAccessToken();
+
+    return array("Accept: *.*",
+                 "Content-Type: application/json",
+                 "User-Agent: Sage Accounting API Sample App - PHP",
+                 "Authorization: Bearer " . $this->accessToken);
+}
 
   private function loadClientConfiguration() {
     $client_config = new ClientConfiguration;

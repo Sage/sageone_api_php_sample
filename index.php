@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include 'sageone_client.php';
 include 'sageone_constants.php';
 
@@ -12,9 +14,13 @@ include('views/header.php');
 
 include('views/guide.php');
 
+if ($error) echo $error;
+
 include('views/access_token.php');
 
-if ($error) echo $error;
+include('views/api_response.php');
+
+include('views/api_request.php');
 
 include('views/dev_resources.php');
 
