@@ -2,9 +2,9 @@
 
 session_start();
 
-include 'sageone_client.php';
+include 'sage_accounting_api_client.php';
 
-$apiClient = new SageoneClient;
+$apiClient = new SageAccountingApiClient;
 
 $clientConfig = new ClientConfiguration;
 if ($clientConfig->fileExists() && !$clientConfig->load()) {

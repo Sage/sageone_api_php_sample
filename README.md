@@ -2,15 +2,13 @@
 
 Sample PHP project that integrates with Sage Accounting via the Sage Accounting API.
 
-* Authentication and API calls are handled in [sageone_client.php](sageone_client.php)
+* Authentication and API calls are handled in [sage_accounting_api_client.php](sage_accounting_api_client.php)
 
 ## Setup
 
 Clone the repo:
 
 `git clone git@github.com:Sage/sageone_api_php_sample.git`
-
-Update the [sageone_constants.php](sageone_constants.php) file with your application's `client_id` and `client_secret`.
 
 Switch to the project directory to run the subsequent commands:
 
@@ -25,6 +23,8 @@ Start a local PHP server:
 ```
 php -S localhost:8080
 ```
+
+Then follow the instructions in the browser.
 
 ## Run the app in Docker
 

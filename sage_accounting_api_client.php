@@ -1,10 +1,11 @@
+
 <?php
 
 include 'client_configuration.php';
 include 'access_token_store.php';
 include 'sage_accounting_api_response.php';
 
-class SageoneClient {
+class SageAccountingApiClient {
   private $clientId;
   private $clientSecret;
   private $callbackUrl;

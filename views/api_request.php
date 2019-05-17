@@ -18,7 +18,7 @@ if ($apiClient->getAccessTokenStore()) {
         <option value="put">PUT</option>
         <option value="delete">DELETE</option>
       </select>
-      <span><?php echo SageoneClient::BASE_ENDPOINT; ?></span>
+      <span><?php echo SageAccountingApiClient::BASE_ENDPOINT; ?></span>
       <label for="resource">Resource</label>
       <input name="resource" type="text" value="contacts" class="form-control" required="true">
     </div>

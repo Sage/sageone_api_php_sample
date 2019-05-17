@@ -1,8 +1,8 @@
 <?php
 
-include 'sageone_client.php';
+include 'sage_accounting_api_client.php';
 
-$apiClient = new SageoneClient;
+$apiClient = new SageAccountingApiClient;
 
 /* Exchange the authorisation code for an access_token */
 $response = $apiClient->renewAccessToken();
