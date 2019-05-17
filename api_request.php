@@ -1,6 +1,6 @@
 <?php
 
-include 'sage_accounting_api_client.php';
+include "lib/sage_accounting_api_client.php";
 
 session_start();
 unset($_SESSION['api_response']);

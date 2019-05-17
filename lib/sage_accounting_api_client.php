@@ -1,4 +1,3 @@
-
 <?php
 
 include 'client_configuration.php';
