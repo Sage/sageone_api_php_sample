@@ -1,0 +1,23 @@
+---
+# This is a template for your client configuration.
+#
+# Follow these steps to get this sample application running:
+#
+# 1. Make a copy of this file and name it `client_config.yml`.
+#
+# 2. Go to the Sage Developer Self Service at
+#    https://developerselfservice.sageone.com/ and sign up/sign in.
+#
+# 3. Create a new application (app) and copy the values for Client ID and
+#    Client Secret into the fields below.
+#
+# 4. Depending on the way you run the sample app (Docker environment,
+#    local Apache, etc.) adjust the hostname/port of the callback URL
+#    below. Add the same callback URL to your client application in the
+#    Sage Developer Self Service.
+
+config:
+  client_id: "YOUR_CLIENT_ID"
+  client_secret: "YOUR_CLIENT_SECRET"
+  callback_url: "http://localhost:8080/callback.php"
+...

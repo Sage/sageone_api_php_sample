@@ -107,6 +107,23 @@ p {
   }
 }
 
+/* footer */
+
+footer ul {
+  display: inline;
+  padding-left: 5px;
+}
+
+footer ul.flags {
+  display: inline;
+  font-size: 20px;
+}
+
+footer ul li {
+  display: inline;
+  padding-left: 3px;
+}
+
 /* miscellaneous */
 
 .debug_dump {
@@ -115,6 +132,36 @@ p {
   width: 100%;
   margin-top: 45px;
   @include box_sizing;
+}
+
+.pre {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.guide, .access-token, .dev-resources, .api-request {
+  width: 600px;
+  text-align: left;
+}
+
+.api-response {
+  text-align: left;
+}
+
+.json {
+  background-color: ghostwhite;
+  border: 1px gray solid;
+  color: black;
+  display: block;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 5px 9px;
+  white-space: pre;
+}
+
+.error {
+  border: 1px red solid;
+  background-color: antiquewhite;
+  padding: 3px 20px;
+  text-align: left;
 }
 
 /* forms */
