@@ -5,7 +5,7 @@ class ClientConfiguration {
   private $clientSecret;
   private $callbackUrl;
 
-  const FILE_NAME = "client_config.yml";
+  const FILE_NAME = "config/client_application.yml";
 
   /**
   * Returns the previously loaded client Id
