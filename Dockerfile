@@ -11,5 +11,3 @@ RUN pecl install yaml \
     && docker-php-ext-enable yaml
 
 COPY . /var/www/html/
-
-RUN touch config/access_token.yml && chmod a+w config/access_token.yml
