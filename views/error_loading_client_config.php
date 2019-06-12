@@ -4,8 +4,8 @@
     about your registered client application.</p>
   <p>Follow these steps to get this sample application running:</p>
   <ul>
-    <li>Make a copy of the file <span class="pre">client_config.template.yml</span> and
-      name it <span class="pre">client_config.yml</span>.</li>
+    <li>Make a copy of the file <span class="pre">config/client_application.template.yml</span> and
+      name it <span class="pre">config/client_application.yml</span>.</li>
     <li>Go to the Sage Developer Self Service at
       <a href="https://developerselfservice.sageone.com/">https://developerselfservice.sageone.com/</a>
       and sign up or sign in.</li>
