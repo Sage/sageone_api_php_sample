@@ -25,7 +25,7 @@ class SageAccountingApiClient {
   */
   public function __construct() {
     $this->loadClientConfiguration();
-    $this->provider = new \League\OAuth2\Client\Provider\GenericProvider([
+    $this->$oauthClient = new \League\OAuth2\Client\Provider\GenericProvider([
       'clientId' => $this->clientId,
       'clientSecret' => $this->clientSecret,
       'redirectUri' => $this->callbackUrl,
@@ -47,24 +47,34 @@ class SageAccountingApiClient {
 
   /* POST request to exchange the authorization code for an access_token */
   public function getInitialAccessToken($code) {
-    $initialAccessToken = $this->provider->getAccessToken('authorization_code', ['code' => $code]);
+    $initialAccessToken = $this->$oauthClient->getAccessToken('authorization_code', ['code' => $code]);
 
     return $this->storeAccessToken($initialAccessToken);
   }
 
   /* POST request to renew the access_token */
   public function renewAccessToken() {
-    $newAccessToken = $this->provider->getAccessToken('refresh_token', ['refresh_token' => $this->getRefreshToken()]);
+    $newAccessToken = $this->$oauthClient->getAccessToken('refresh_token', ['refresh_token' => $this->getRefreshToken()]);
 
     return $this->storeAccessToken($newAccessToken);
   }
 
   /* GET request */
   public function execApiRequest($resource, $httpMethod, $postData = NULL) {
-    $curl = $this->prepareApiRequest($resource, $httpMethod, $postData);
-    $response = $this->sendApiRequest($curl);
+    $method = strtoupper($httpMethod);
+    $options['headers']['Content-Type'] = 'application/json';
 
-    return $this->buildApiResponse($curl, $response);
+    if ($postData && ($method == 'POST' || $method == 'PUT')) {
+      $options['body'] = $postData;
+    }
+
+    $request = $this->$oauthClient->getAuthenticatedRequest($method, self::BASE_ENDPOINT . $resource, $this->getAccessToken(), $options);
+
+    $startTime = microtime(1);
+    $requestResponse = $this->$oauthClient->getResponse($request);
+    $endTime = microtime(1);
+
+    return new SageAccountingApiResponse($requestResponse, $endTime - $startTime);
   }
 
   /**
@@ -100,58 +110,6 @@ class SageAccountingApiClient {
   }
 
   // Private area
-
-  private function prepareApiRequest($resource, $method, $postData = NULL) {
-    $endpoint = self::BASE_ENDPOINT . $resource;
-    $method = strtoupper($method);
-
-    $curl = curl_init($endpoint);
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-    curl_setopt($curl, CURLOPT_HEADER, false);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getRequestHeaders());
-
-    if ($postData && ($method == 'POST' || $method == 'PUT')) {
-      curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
-    }
-
-    curl_setopt($curl, CURLINFO_HEADER_OUT, TRUE);
-
-    return $curl;
-  }
-
-  private function sendApiRequest($curl) {
-    $response = curl_exec($curl);
-
-    if (!$response) {
-      /* Handle errors: DNS lookup failed, connection timeout, read timeout */
-    }
-
-    return $response;
-  }
-
-  private function buildApiResponse($curl, $response) {
-    return new SageAccountingApiResponse($curl, $response);
-  }
-
-  private function getToken($params) {
-    $options = array('http' => array('header'  => "Content-type: application/x-www-form-urlencoded",
-                                     'method'  => 'POST',
-                                     'content' => http_build_query($params)));
-    $context  = stream_context_create($options);
-    $result = file_get_contents(self::TOKEN_ENDPOINT, false, $context);
-    if ($result === FALSE) { /* Handle error */ }
-
-    return $result;
-  }
-
-  private function getRequestHeaders() {
-    return array("Accept: *.*",
-                 "Content-Type: application/json",
-                 "User-Agent: Sage Accounting API Sample App - PHP",
-                 "Authorization: Bearer " . $this->getAccessToken());
-  }
-
   private function loadClientConfiguration() {
     $clientConfig = new ClientConfiguration;
     if ($clientConfig->load()) {

@@ -7,11 +7,11 @@ class SageAccountingApiResponse {
   private $json;
   private $duration;
 
-  public function __construct($curl, $response) {
-    $this->rawBody = $response;
-    $this->status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-    $this->headers = curl_getinfo($curl, CURLINFO_HEADER_OUT);
-    $this->duration = curl_getinfo($curl, CURLINFO_TOTAL_TIME);
+  public function __construct($response, $duration) {
+    $this->rawBody = $response->getBody()->getContents();
+    $this->status = $response->getStatusCode();
+    $this->headers = $response->getHeaders();
+    $this->duration = round($duration, 3);
   }
 
   /**
