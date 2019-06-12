@@ -39,12 +39,12 @@ class AccessTokenStore {
   /**
   * Writes the data to the YAML file. Returns TRUE on success, otherwise FALSE
   */
-  public function save($accessToken, $expiresIn, $refreshToken, $refreshTokenExpiresIn) {
+  public function save($accessToken, $expiresAt, $refreshToken, $refreshTokenExpiresIn) {
 
     $data = array(
       "data" => array(
         "access_token" => $accessToken,
-        "expires_at" => time() + $expiresIn,
+        "expires_at" => $expiresAt,
         "refresh_token" => $refreshToken,
         "refresh_token_expires_at" => time() + $refreshTokenExpiresIn
       )

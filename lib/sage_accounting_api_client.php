@@ -1,5 +1,6 @@
 <?php
 
+require '/var/php/vendor/autoload.php';
 include 'client_configuration.php';
 include 'access_token_store.php';
 include 'sage_accounting_api_response.php';
@@ -8,6 +9,7 @@ class SageAccountingApiClient {
   private $clientId;
   private $clientSecret;
   private $callbackUrl;
+  private $oauthClient;
   private $scope;
   private $accessToken;
   private $refreshToken;
@@ -23,6 +25,14 @@ class SageAccountingApiClient {
   */
   public function __construct() {
     $this->loadClientConfiguration();
+    $this->provider = new \League\OAuth2\Client\Provider\GenericProvider([
+      'clientId' => $this->clientId,
+      'clientSecret' => $this->clientSecret,
+      'redirectUri' => $this->callbackUrl,
+      'urlAuthorize' => self::AUTH_ENDPOINT,
+      'urlAccessToken' => self::TOKEN_ENDPOINT,
+      'urlResourceOwnerDetails' => ''
+    ]);
   }
 
   /**
@@ -37,27 +47,16 @@ class SageAccountingApiClient {
 
   /* POST request to exchange the authorization code for an access_token */
   public function getInitialAccessToken($code) {
-    $params = array("client_id" => $this->clientId,
-                    "client_secret" => $this->clientSecret,
-                    "code" => $code,
-                    "grant_type" => "authorization_code",
-                    "redirect_uri" => $this->callbackUrl);
+    $initialAccessToken = $this->provider->getAccessToken('authorization_code', ['code' => $code]);
 
-    $response = $this->getToken($params);
-
-    return $this->storeAccessToken($response);
+    return $this->storeAccessToken($initialAccessToken);
   }
 
   /* POST request to renew the access_token */
   public function renewAccessToken() {
-    $params = array("client_id" => $this->clientId,
-                    "client_secret" => $this->clientSecret,
-                    "refresh_token" => $this->getRefreshToken(),
-                    "grant_type" => "refresh_token");
+    $newAccessToken = $this->provider->getAccessToken('refresh_token', ['refresh_token' => $this->getRefreshToken()]);
 
-    $response = $this->getToken($params);
-
-    return $this->storeAccessToken($response);
+    return $this->storeAccessToken($newAccessToken);
   }
 
   /* GET request */
@@ -163,18 +162,15 @@ class SageAccountingApiClient {
   }
 
   private function storeAccessToken($response) {
-    $json = json_decode($response, true);
-
     if (!$this->accessTokenStore) {
       $this->accessTokenStore = new AccessTokenStore();
     }
 
-    $this->accessTokenStore->save($json["access_token"],
-                                  $json["expires_in"],
-                                  $json["refresh_token"],
-                                  $json["refresh_token_expires_in"]);
-
-    return $json;
+    $this->accessTokenStore->save($response->getToken(),
+                                  $response->getExpires(),
+                                  $response->getRefreshToken(),
+                                  $response->getValues()["refresh_token_expires_in"]);
+    return $response;
   }
 }
 
