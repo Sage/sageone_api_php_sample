@@ -2,20 +2,22 @@
 
 session_start();
 
-include 'lib/sage_accounting_api_client.php';
+include 'lib/api_client.php';
 
-$apiClient = new SageAccountingApiClient;
+$apiClient = new \SageAccounting\ApiClient;
 
-$clientConfig = new ClientConfiguration;
+$clientConfig = new \SageAccounting\ClientConfiguration;
 if ($clientConfig->fileExists() && !$clientConfig->load()) {
-  $error = file_get_contents('views/error_loading_client_config.php');
+    $error = file_get_contents('views/error_loading_client_config.php');
 }
 
 include('views/header.php');
 
 include('views/guide.php');
 
-if ($error) echo $error;
+if ($error) {
+    echo $error;
+}
 
 include('views/access_token.php');
 
@@ -26,5 +28,3 @@ include('views/api_request.php');
 include('views/dev_resources.php');
 
 include('views/footer.php');
-
-?>

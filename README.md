@@ -2,7 +2,7 @@
 
 Sample PHP project that integrates with Sage Accounting via the Sage Accounting API.
 
-* Authentication and API calls are handled in [sage_accounting_api_client.php](sage_accounting_api_client.php)
+* Authentication and API calls are handled in [lib/api_client.php](lib/api_client.php)
 
 ## Setup
 

@@ -1,11 +1,9 @@
 <?php
 
 if ($apiClient->getAccessTokenStore()) {
-
-  $expiresIn = $apiClient->getExpiresAt() - time();
-  if ($expiresIn > 0) {
-
-?>
+    $expiresIn = $apiClient->getExpiresAt() - time();
+    if ($expiresIn > 0) {
+        ?>
 <div class="api-request">
   <h3>Make API Request</h3>
 
@@ -18,7 +16,7 @@ if ($apiClient->getAccessTokenStore()) {
         <option value="put">PUT</option>
         <option value="delete">DELETE</option>
       </select>
-      <span><?php echo SageAccountingApiClient::BASE_ENDPOINT; ?></span>
+      <span><?php echo \SageAccounting\ApiClient::BASE_ENDPOINT; ?></span>
       <label for="resource">Resource</label>
       <input name="resource" type="text" value="contacts" class="form-control" required="true">
     </div>
@@ -28,7 +26,7 @@ if ($apiClient->getAccessTokenStore()) {
     <input type='submit' class='btn btn-primary'>
   </form>
 </div>
-<?php
-  }
+        <?php
+    }
 }
 ?>

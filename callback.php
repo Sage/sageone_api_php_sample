@@ -1,13 +1,11 @@
 <?php
 
-include "lib/sage_accounting_api_client.php";
+include "lib/api_client.php";
 
-$apiClient = new SageAccountingApiClient;
+$apiClient = new \SageAccounting\ApiClient;
 
 /* Exchange the authorisation code for an access_token */
 $response = $apiClient->getInitialAccessToken($_GET['code']);
 
 /* redirect with the response */
 header("Location: http://" . $_SERVER['HTTP_HOST'] . "/");
-
-?>
