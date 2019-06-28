@@ -1,5 +1,5 @@
 <div class="error">
-  <h3>There was a problem loading client_config.yml</h3>
+  <h3>There was a problem loading client_application.yml</h3>
   <p>Before you can start, you need to prepare a config file, which contains information
     about your registered client application.</p>
   <p>Follow these steps to get this sample application running:</p>
