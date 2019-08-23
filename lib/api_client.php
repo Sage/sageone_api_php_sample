@@ -37,7 +37,8 @@ class ApiClient
         'redirectUri' => $this->callbackUrl,
         'urlAuthorize' => self::AUTH_ENDPOINT,
         'urlAccessToken' => self::TOKEN_ENDPOINT,
-        'urlResourceOwnerDetails' => ''
+        'urlResourceOwnerDetails' => '',
+        'timeout' => 10
         ]);
     }
 
