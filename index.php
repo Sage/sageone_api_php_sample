@@ -19,12 +19,8 @@ if ($error) {
     echo $error;
 }
 
-include('views/access_token.php');
-
-include('views/api_response.php');
-
 include('views/api_request.php');
 
-include('views/dev_resources.php');
+include('views/api_response.php');
 
 include('views/footer.php');

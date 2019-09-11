@@ -1,18 +1,44 @@
-<div class="guide">
-  <h3>Step by Step Guide</h3>
-  <ol>
-    <li>
-      Sign up for a developer account <a href="https://developerselfservice.sageone.com/" target="_blank">here</a>.
+<div id="guide" class="guide">
+  <h1 class="title">Let's get started</h1>
+
+  <ol class="steps">
+    <li class="step">
+      <h2 class="step__title">
+        <a href="https://developerselfservice.sageone.com/" target="_blank">Sign up for a Sage developer account</a>
+      </h2>
     </li>
-    <li>
-      Create a client application. Enter <span class="pre">http://<?php echo $_SERVER['HTTP_HOST'] ?>/callback.php</span> as the callback URL.
+    <li class="step">
+      <h2 class="step__title">
+        <a href="" target="_blank">Create a client application</a>
+      </h2>
+      <div class="step__body">
+        Enter the following as the callback URL:<br />
+        <code>http://<?php echo $_SERVER['HTTP_HOST'] ?>/callback.php</code>
+      </div>
     </li>
-    <li>
-      Put client ID, secret and callback URL into <span class="pre">config/client_application.yml</span>.
+    <li class="step">
+      <h2 class="step__title">
+        Copy the Client Id and Client Secret into:
+      </h2>
+      <div class="step__body">
+        <code>config/client_application.yml</code>
+      </div>
     </li>
-    <li>Create trial user account. Click on one of the flag links at the bottom.</li>
-    <li><a href="<?php echo $apiClient->authorizationEndpoint(); ?>">Authorize</a> API access.</li>
-    <li>Make your first API call.</li>
-    <li>Be happy!</li>
+    <li class="step">
+      <h2 class="step__title">
+        <a href="https://sage.com/freetrial" target="_blank">Sign up for a free product trial</a>
+      </h2>
+    </li>
+    <li class="step">
+      <h2 class="step__title">
+        <a href="<?php echo $apiClient->authorizationEndpoint(); ?>">Authorize API access</a>
+      </h2>
+    </li>
+    <li class="step">
+      <h2 class="step__title">
+        Make your first API call
+      </h2>
+    </li>
   </ol>
 </div>
+<div class="main">
