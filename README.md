@@ -40,6 +40,12 @@ Start the container:
 ./script/start.sh
 ```
 
+If you need, stop.sh will stop the container:
+
+```
+./script/stop.sh
+```
+
 ## Usage
 
 You can now access [http://localhost:8080/](http://localhost:8080/), authorize and make an API call. Depending on your setup, it could also be [http://192.168.99.100:8080/](http://192.168.99.100:8080/) or similar.

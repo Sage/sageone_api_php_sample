@@ -26,7 +26,7 @@
     </li>
     <li class="step">
       <h2 class="step__title">
-        <a href="https://sage.com/freetrial" target="_blank">Sign up for a free product trial</a>
+        <a href="https://developer.sage.com/api/accounting/guides/faq/" target="_blank">Sign up for a free product trial</a>
       </h2>
     </li>
     <li class="step">
