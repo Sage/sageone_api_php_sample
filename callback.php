@@ -1,15 +1,23 @@
 <?php
 
-include 'sageone_client.php';
-include 'sageone_constants.php';
+include "lib/api_client.php";
 
-$sageone_client = new SageoneClient($client_id, $client_secret, $callback_url, $auth_endpoint, $token_endpoint, $scope);
+$apiClient = new \SageAccounting\ApiClient;
 
-/* Exchange the authorisation code for an access_token */
-$response = $sageone_client->getAccessToken($_GET['code']);
+try {
+  $response = $apiClient->getInitialAccessToken($_GET['code'],$_GET['state']);
+} 
+catch (BadMethodCallException $e) {
+  // Required parameter not passed: "code"
+  ExceptionHandler::raiseError(get_class($e), $e->getMessage());
+}
+catch (UnexpectedValueException $e) {
+  // An OAuth server error was encountered that did not contain a JSON body 
+  ExceptionHandler::raiseError(get_class($e), $e->getMessage());
+}
+finally {
+  /* Exchange the authorisation code for an access_token */
+  /* redirect with the response */
+  header("Location: http://" . $_SERVER['HTTP_HOST'] . "/");
+}
 
-/* redirect with the response */
-header("Location: http://localhost:8000/sageone_data.php?token_response=" . rawurlencode($response));
-die();
-
-?>

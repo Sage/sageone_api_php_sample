@@ -1,0 +1,8 @@
+{
+  "config": {
+    "vendor-dir": "/var/php/vendor"
+  },
+  "require": {
+    "league/oauth2-client": "2.*"
+  }
+}

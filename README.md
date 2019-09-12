@@ -1,35 +1,58 @@
-# Sage Business Cloud API Sample application (PHP)
+# Sage Business Cloud Accounting API Sample application (PHP)
 
-### FOR changes required for v3 please refer to the [v3 branch](https://github.com/Sage/sageone_api_php_sample/tree/v3)
+Sample PHP project that integrates with Sage Accounting via the Sage Accounting API.
 
-##### Note: Request signing and noncing (the X-Signature and X-Nonce headers) is no longer checked in v3. The related code will soon be removed from this repo.
+* Authentication and API calls are handled in [lib/api_client.php](lib/api_client.php)
 
-Sample PHP project that integrates with Sage Business Cloud Accounting via the Sage API.
-
-* Authentication and API calls are handled in [sageone_client.php](sageone_client.php)
-* Request signing is handled in [sageone_signer.php](sageone_signer.php).
-* Callback is handled in [callback.php](callback.php), point the callback_url here.
-
-## Run the app locally
+## Setup
 
 Clone the repo:
 
 `git clone git@github.com:Sage/sageone_api_php_sample.git`
 
-Update the [sageone_constants.php](sageone_constants.php) file with your application's `client_id`, `client_secret`, `signing_secret` and `callback_url`.
-
-Switch to the project directory and start a local PHP server:
+Switch to the project directory to run the subsequent commands:
 
 ```
 cd sageone_api_php_sample
-php -S localhost:8000
 ```
 
-You can now access the [home page](http://localhost:8000/), authorize and make an API call.
+## Run the app locally
+
+Start a local PHP server:
+
+```
+php -S localhost:8080
+```
+
+Then follow the instructions in the browser.
+
+## Run the app in Docker
+
+Build the image:
+
+```
+./script/setup.sh
+```
+
+Start the container:
+
+```
+./script/start.sh
+```
+
+If you need, stop.sh will stop the container:
+
+```
+./script/stop.sh
+```
+
+## Usage
+
+You can now access [http://localhost:8080/](http://localhost:8080/), authorize and make an API call. Depending on your setup, it could also be [http://192.168.99.100:8080/](http://192.168.99.100:8080/) or similar.
 
 ## License
 
 This sample application is available as open source under the terms of the
 [MIT licence](LICENSE).
 
-Copyright (c) 2018 Sage Group Plc. All rights reserved.
+Copyright (c) 2019 Sage Group Plc. All rights reserved.
