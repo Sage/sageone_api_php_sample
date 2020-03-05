@@ -22,6 +22,8 @@
       </h2>
       <div class="step__body">
         <code>config/client_application.yml</code>
+        <br />
+        &hellip;and then restart Docker container.
       </div>
     </li>
     <li class="step">
