@@ -62,19 +62,19 @@ class ApiClient
         catch (\League\OAuth2\Client\Grant\Exception\InvalidGrantException $e) {
           // authorization code was not found or is invalid
           ExceptionHandler::raiseError(get_class($e), $e->getMessage());
-        }  
+        }
         catch (\GuzzleHttp\Exception\ConnectException $e) {
           // if no internet connection is available
           ExceptionHandler::raiseError(get_class($e), $e->getMessage());
         }
         catch (UnexpectedValueException $e) {
-          // An OAuth server error was encountered that did not contain a JSON body 
+          // An OAuth server error was encountered that did not contain a JSON body
           ExceptionHandler::raiseError(get_class($e), $e->getMessage());
         }
-        catch(Exception $e) {       
+        catch(Exception $e) {
           // general exception
           ExceptionHandler::raiseError(get_class($e), $e->getMessage());
-        } 
+        }
         finally {
           return $this->storeAccessToken($initialAccessToken);
         }
@@ -89,7 +89,7 @@ class ApiClient
       catch (\League\OAuth2\Client\Grant\Exception\InvalidGrantException $e) {
         // refresh token was not found or is invalid
         ExceptionHandler::raiseError(get_class($e), $e->getMessage());
-      }  
+      }
       catch (\GuzzleHttp\Exception\ConnectException $e) {
         // if no internet connection is available
         ExceptionHandler::raiseError(get_class($e), $e->getMessage());
@@ -97,7 +97,7 @@ class ApiClient
       catch(Exception $e) {
         // general exception
         ExceptionHandler::raiseError(get_class($e), $e->getMessage());
-      } 
+      }
       finally {
         return $this->storeAccessToken($newAccessToken);
       }
@@ -119,10 +119,10 @@ class ApiClient
           $startTime = microtime(1);
           $requestResponse = $this->$oauthClient->getResponse($request);
 
-          } 
+          }
           catch(\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
             ExceptionHandler::raiseError(get_class($e), $e->getMessage());
-          } 
+          }
           catch (\GuzzleHttp\Exception\ClientException $e) {
             // catch all 4xx errors
             $requestResponse = $e->getResponse();
@@ -135,13 +135,13 @@ class ApiClient
             // if no internet connection is available
             ExceptionHandler::raiseError(get_class($e), $e->getMessage());
           }
-          catch(Exception $e) {    
+          catch(Exception $e) {
             // general exception
             ExceptionHandler::raiseError(get_class($e), $e->getMessage());
-          } 
+          }
           finally {
             $endTime = microtime(1);
-            return new \SageAccounting\ApiResponse($requestResponse, $endTime - $startTime);            
+            return new \SageAccounting\ApiResponse($requestResponse, $endTime - $startTime);
           }
     }
 
@@ -215,9 +215,9 @@ class ApiClient
       $charLength = strlen($include_chars);
       $randomString = '';
       // length of 30
-      for ($i = 0; $i < 30; $i++) { 
+      for ($i = 0; $i < 30; $i++) {
           $randomString .= $include_chars [rand(0, $charLength - 1)];
       }
       $this->generatedState = $randomString;
-  }   
+  }
 }
