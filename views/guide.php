@@ -4,7 +4,7 @@
   <ol class="steps">
     <li class="step">
       <h2 class="step__title">
-        <a href="https://developerselfservice.sageone.com/" target="_blank">Sign up for a Sage developer account</a>
+        <a href="<?php echo $viewConfig->get('developer_selfservice_url'); ?>" target="_blank">Sign up for a Sage developer account</a>
       </h2>
     </li>
     <li class="step">
@@ -26,7 +26,7 @@
     </li>
     <li class="step">
       <h2 class="step__title">
-        <a href="https://developer.sage.com/api/accounting/guides/faq/" target="_blank">Sign up for a free product trial</a>
+        <a href="<?php echo $viewConfig->get('user_signup_url'); ?>" target="_blank">Sign up for a free product trial</a>
       </h2>
     </li>
     <li class="step">
