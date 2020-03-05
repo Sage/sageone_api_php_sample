@@ -10,7 +10,7 @@
       <a href="https://developerselfservice.sageone.com/">https://developerselfservice.sageone.com/</a>
       and sign up or sign in.</li>
     <li>Create a new application (app) and copy the values for Client ID and Client Secret
-      into the fields in <span class="pre">client_config.yml</span>.</li>
+      into the fields in <span class="pre">client_application.yml</span>.</li>
     <li>Depending on the way you run the sample app (Docker environment, local Apache,
       etc.) adjust the hostname/port of the callback URL below. Add the same callback URL
       to your client application in the Sage Developer Self Service.</li>
