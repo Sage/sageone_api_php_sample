@@ -1,3 +1,3 @@
 ---
-developer_selfservice_url: https://developerselfservice.sageone.com
-user_signup_url: https://developer.sage.com/api/accounting/guides/faq/
+developer_selfservice_url: https://developer-selfservice.app.qa5.dev-sageone.com
+user_signup_url: https://dashboard.app.qa5.dev-sageone.com

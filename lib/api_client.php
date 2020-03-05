@@ -19,9 +19,9 @@ class ApiClient
     private $accessTokenStore;
     private $generatedState;
 
-    const BASE_ENDPOINT = "https://api.accounting.sage.com/v3.1/";
-    const AUTH_ENDPOINT = "https://www.sageone.com/oauth2/auth/central?filter=apiv3.1";
-    const TOKEN_ENDPOINT = "https://oauth.accounting.sage.com/token";
+    const BASE_ENDPOINT = "https://pnofxtaoia.execute-api.eu-west-1.amazonaws.com/qa5/";
+    const AUTH_ENDPOINT = "https://central.app.qa5.dev-sageone.com/oauth2/auth?filter=apiv3.1";
+    const TOKEN_ENDPOINT = "https://aws-oauth.service.qa5.dev-sageone.com/token";
     const SCOPE = "full_access";
 
   /**
