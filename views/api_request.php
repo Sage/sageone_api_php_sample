@@ -1,10 +1,9 @@
-
 <?php
   if ($apiClient->getAccessTokenStore()) {
     $token = $apiClient->getAccessToken();
     $expiresIn = $apiClient->getExpiresAt() - time();
     $expired = $expiresIn <= 0;
-    
+
     if ($expired) {
       $expiresMessage = "Expired <strong>" . abs($expiresIn) . "</strong> seconds ago";
     } else {
@@ -48,7 +47,7 @@
           refresh.classList.add('is-destructive');
         }
       }
-      
+
       updateSeconds();
 
       setInterval(updateSeconds, 1000);
@@ -70,7 +69,7 @@
   <div class="field">
     <label class="field__label" for="resource">Request Endpoint</label>
     <p class="field__help">
-      https://api.accounting.sage.com/v3.1/<strong>&lt;Resource&gt;</strong>
+      <?php echo $apiClient::BASE_ENDPOINT; ?><strong>&lt;Resource&gt;</strong>
     </p>
     <div class="field__body">
       <input class="field__input" list="resources" value="contacts" id="resource" name="resource" required/>
