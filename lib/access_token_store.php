@@ -8,7 +8,7 @@ class AccessTokenStore
     private $refreshToken;
     private $refreshTokenExpiresAt;
 
-    const FILE_NAME = "config/access_token.yml";
+    const FILE_NAME = "db/access_token.yml";
 
   /**
   * Returns the previously loaded access token
