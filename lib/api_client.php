@@ -31,7 +31,7 @@ class ApiClient
     {
         $this->generateRandomState();
         $this->loadClientConfiguration();
-        $this->$oauthClient = new \League\OAuth2\Client\Provider\GenericProvider([
+        $this->oauthClient = new \League\OAuth2\Client\Provider\GenericProvider([
         'clientId' => $this->clientId,
         'clientSecret' => $this->clientSecret,
         'redirectUri' => $this->callbackUrl,
@@ -57,7 +57,7 @@ class ApiClient
     public function getInitialAccessToken($code, $receivedState)
     {
         try {
-          $initialAccessToken = $this->$oauthClient->getAccessToken('authorization_code', ['code' => $code]);
+          $initialAccessToken = $this->oauthClient->getAccessToken('authorization_code', ['code' => $code]);
         }
         catch (\League\OAuth2\Client\Grant\Exception\InvalidGrantException $e) {
           // authorization code was not found or is invalid
@@ -84,7 +84,7 @@ class ApiClient
     public function renewAccessToken()
     {
       try {
-          $newAccessToken = $this->$oauthClient->getAccessToken('refresh_token', ['refresh_token' => $this->getRefreshToken()]);
+          $newAccessToken = $this->oauthClient->getAccessToken('refresh_token', ['refresh_token' => $this->getRefreshToken()]);
         }
       catch (\League\OAuth2\Client\Grant\Exception\InvalidGrantException $e) {
         // refresh token was not found or is invalid
@@ -114,10 +114,10 @@ class ApiClient
         }
 
         try {
-          $request = $this->$oauthClient->getAuthenticatedRequest($method, self::BASE_ENDPOINT . $resource, $this->getAccessToken(), $options);
+          $request = $this->oauthClient->getAuthenticatedRequest($method, self::BASE_ENDPOINT . $resource, $this->getAccessToken(), $options);
 
           $startTime = microtime(1);
-          $requestResponse = $this->$oauthClient->getResponse($request);
+          $requestResponse = $this->oauthClient->getResponse($request);
 
           }
           catch(\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
